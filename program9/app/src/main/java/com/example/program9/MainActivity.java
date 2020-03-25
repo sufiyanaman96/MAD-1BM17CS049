@@ -1,12 +1,17 @@
 package com.example.program9;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.NotificationChannel;
 import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.content.Context;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,21 +27,40 @@ public class MainActivity extends AppCompatActivity {
         notify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String msg = e.getText().toString();
+                int NOTIFICATION_ID = 234;
+                NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-                Notification.Builder builder =
-                        new Notification.Builder(MainActivity.this)
-                                .setSmallIcon(R.mipmap.ic_launcher)
-                                .setContentTitle("Notifications Example")
-                                .setContentText("This is a test notification");
+                String CHANNEL_ID = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    CHANNEL_ID = "my_channel_01";
+                    CharSequence name = "my_channel";
+                    String Description = "This is my channel";
+                    int importance = NotificationManager.IMPORTANCE_HIGH;
+                    NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
+                    mChannel.setDescription(Description);
+                    mChannel.enableLights(true);
+                    mChannel.setLightColor(Color.RED);
+                    mChannel.enableVibration(true);
+                    mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+                    mChannel.setShowBadge(false);
+                    notificationManager.createNotificationChannel(mChannel);
+                }
 
-                Intent notificationIntent = new Intent(MainActivity.this, secondActivity.class);
-                PendingIntent contentIntent = PendingIntent.getActivity(MainActivity.this, 0, notificationIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT);
-                builder.setContentIntent(contentIntent);
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, CHANNEL_ID)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentTitle("My Notification")
+                        .setContentText(msg);
 
-                // Add as notification
-                NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                manager.notify(0, builder.build());
+                Intent resultIntent = new Intent(MainActivity.this, MainActivity.class);
+                TaskStackBuilder stackBuilder = TaskStackBuilder.create(MainActivity.this);
+                stackBuilder.addParentStack(MainActivity.class);
+                stackBuilder.addNextIntent(resultIntent);
+                PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+                builder.setContentIntent(resultPendingIntent);
+                notificationManager.notify(NOTIFICATION_ID, builder.build());
+
+
             }
         });
     }
