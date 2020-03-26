@@ -14,16 +14,16 @@ import android.widget.ToggleButton;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
-
+    TimePicker alarmTimePicker;
+    PendingIntent pendingIntent;
+    AlarmManager alarmManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        TimePicker alarmTimePicker;
-        PendingIntent pendingIntent;
-        AlarmManager alarmManager;
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         alarmTimePicker = (TimePicker) findViewById(R.id.timePicker);
-        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE); }
         public void OnToggleClicked ( View v){
             long time;
             if (((ToggleButton) v ).isChecked()) {
@@ -52,6 +52,6 @@ public class MainActivity extends AppCompatActivity {
 
                 Toast.makeText(MainActivity.this, "ALARM OFF", Toast.LENGTH_SHORT).show();
             }
-        };
+        }
     }
-}
+
