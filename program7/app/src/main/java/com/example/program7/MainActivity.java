@@ -18,12 +18,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Button button;
-        final TextView textView;
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         button = (Button)findViewById(R.id.button);
-        textView = (TextView)findViewById(R.id.textView);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -32,7 +30,10 @@ public class MainActivity extends AppCompatActivity {
                     double latitude = gps.getLatitude();
                     double longitude = gps.getLongitude();
                     Toast.makeText(getApplicationContext(), "Your Location is \nLat:" + latitude + "\nLong:" + longitude, Toast.LENGTH_LONG).show();
-                    textView.setText("Your Location is ");
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(), "Your Location is currently not available.", Toast.LENGTH_LONG).show();
                 }
             }
         });
