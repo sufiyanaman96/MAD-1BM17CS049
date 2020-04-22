@@ -10,7 +10,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.koddev.chatapp.R;
 
-public class StartActivity extends AppCompatActivity {
+public class  StartActivity extends AppCompatActivity {
 
     Button login, register;
 

@@ -29,6 +29,8 @@
         <activity
             android:name="com.project.chatapp.LoginActivity"
             android:parentActivityName="com.project.chatapp.StartActivity" />
+        <activity
+            android:name="com.project.chatapp.GroupActivity"/>
         <activity android:name="com.project.chatapp.MessageActivity" />
         <activity
             android:name="com.project.chatapp.ResetPasswordActivity"

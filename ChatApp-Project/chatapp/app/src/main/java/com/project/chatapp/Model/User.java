@@ -1,19 +1,23 @@
 package com.project.chatapp.Model;
 
+import androidx.annotation.NonNull;
+
 public class User {
 
-    private String id;
-    private String username;
+    private String uid;
+    private String name;
     private String imageURL;
     private String status;
     private String search;
+    private String email;
 
-    public User(String id, String username, String imageURL, String status, String search) {
-        this.id = id;
-        this.username = username;
+    public User(String uid, String name, String imageURL, String status, String search,String email) {
+        this.uid = uid;
+        this.name = name;
         this.imageURL = imageURL;
         this.status = status;
         this.search = search;
+        this.email = email;
     }
 
     public User() {
@@ -21,19 +25,26 @@ public class User {
     }
 
     public String getId() {
-        return id;
+        return uid;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId(String uid) {
+        this.uid = uid;
+    }
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getUsername() {
-        return username;
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(String name) {
+        this.name = name;
     }
 
     public String getImageURL() {
@@ -58,5 +69,11 @@ public class User {
 
     public void setSearch(String search) {
         this.search = search;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "User(" + "uid='" + uid + '\'' + ", name ='" + name + '\'' + ", email ='" + email + '\'' + '}';
     }
 }

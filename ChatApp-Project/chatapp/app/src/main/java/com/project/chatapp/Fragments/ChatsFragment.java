@@ -1,13 +1,18 @@
 package com.project.chatapp.Fragments;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.RelativeLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -18,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.project.chatapp.Adapter.UserAdapter;
+import com.project.chatapp.GroupActivity;
 import com.project.chatapp.Model.Chatlist;
 import com.project.chatapp.Model.User;
 import com.project.chatapp.Notifications.Token;
@@ -30,7 +36,9 @@ import java.util.List;
 public class ChatsFragment extends Fragment {
 
     private RecyclerView recyclerView;
-
+    Context context;
+    private AppCompatActivity view;
+    Button button;
     private UserAdapter userAdapter;
     private List<User> mUsers;
 
@@ -42,16 +50,22 @@ public class ChatsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        context=container.getContext();
         View view = inflater.inflate(R.layout.fragment_chats, container, false);
-
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
+        RelativeLayout rl=(RelativeLayout)inflater.inflate(R.layout.fragment_chats, container, false);
+        button = (Button) view.findViewById(R.id.button);
         fuser = FirebaseAuth.getInstance().getCurrentUser();
-
+        button.setOnClickListener(new View.OnClickListener() {
+                                      @Override
+                                      public void onClick(View view) {
+                                          Intent activity2Intent = new Intent(context, GroupActivity.class);
+                                          startActivity(activity2Intent);
+                                      }
+                                  });
         usersList = new ArrayList<>();
-
         reference = FirebaseDatabase.getInstance().getReference("Chatlist").child(fuser.getUid());
         reference.addValueEventListener(new ValueEventListener() {
             @Override
